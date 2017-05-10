@@ -1,0 +1,72 @@
+
+% This LaTeX was auto-generated from an M-file by MATLAB.
+% To make changes, update the M-file and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+function C = GaussSeidel(A,B,n,EPS,ITMAX)
+X=zeros(n,1);
+iteracoes=0;
+erro=1000;
+
+    while erro>EPS && iteracoes<ITMAX
+       XOld=X;
+       for i=1:n
+        T=Soma1(A,X,i);
+        U=Soma2(A,XOld,i,n);
+        X(i)=(B(i)- T - U)/A(i,i);
+       end
+       erro=NormaInfinita(XOld,X,n);
+       iteracoes=iteracoes+1;
+    end
+
+    if iteracoes==ITMAX
+        fprintf('DIVERGE!\n');
+    else
+        fprintf('Converge para:\n');
+        disp(X);
+        C=X
+        fprintf('\nQuantidade de Itera��es:\n');
+        disp(iteracoes);
+        fprintf('\n');
+    end
+end
+
+function [soma1] = Soma1(A,x_0,i)
+soma1=0;
+    for j=1:i-1
+        soma1 = soma1 + (A(i,j)*x_0(j));
+    end
+end
+
+function [soma2] = Soma2(A,x_0,i,n)
+soma2=0;
+    for j=i+1:n
+        soma2 = soma2 + (A(i,j)*x_0(j));
+    end
+end
+
+function [max] = NormaInfinita(xk,xk1,n)
+
+    x=xk1-xk;
+    max=0;
+    for i=1:n
+            soma=abs(x(i,1));
+        if(soma>max)
+            max=soma;
+        end
+    end
+end
+\end{verbatim}
+\end{document}
+    
